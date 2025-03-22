@@ -1,0 +1,7 @@
+numpy
+torch
+Pillow
+opencv-python
+scikit-learn
+xgboost
+matplotlib
