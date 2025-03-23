@@ -6,8 +6,12 @@ name: Python application
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - ".github/**"  # Ignore changes in the 'docs' folder
   pull_request:
     branches: [ "main" ]
+    paths-ignore:
+      - ".github/**"  # Ignore changes in the 'docs' folder
 
 permissions:
   contents: read
