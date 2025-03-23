@@ -76,8 +76,8 @@ def extract_bovw_features(directory,num_clusters=50):
     return np.array(bovw_features), np.array(labels)
     
 # Load Dataset
-data_dir_train = ["training//museum-indoor","training//museum-outdoor" ] 
-data_dir_test = ["Museum_Validation//museum-indoor","Museum_Validation//museum-outdoor" ] 
+data_dir_train = ["training/museum-indoor","training/museum-outdoor" ] 
+data_dir_test = ["Museum_Validation/museum-indoor","Museum_Validation/museum-outdoor" ] 
 
 X_train,X_train_rgb,X_train_hsv,y_train,y_train_rgb = load_images_to_array(data_dir_train)
 X_test,X_test_rgb,X_test_hsv,y_test,y_test_rgb = load_images_to_array(data_dir_test)
