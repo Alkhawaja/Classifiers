@@ -63,7 +63,7 @@ def extract_bovw_features(directory,num_clusters=50):
     # Step 2: Apply KMeans clustering to form visual words
     kmeans = KMeans(n_clusters=num_clusters, random_state=42, n_init=10)
     kmeans.fit(descriptors_stack)
-    sio.dump(kmeans, "Models/kmeans.skops")
+    sio.dump(kmeans, "./Models/kmeans.skops")
     # Step 3: Create histograms for each image
     bovw_features = []
 
@@ -172,9 +172,9 @@ print("Decision Tree F1 Score:", f1_score(y_test_sift, y_pred_dt, average='weigh
 ConfusionMatrixDisplay(confusion_matrix(y_test_sift, y_pred_dt),display_labels=dt_sift.classes_).plot()
 print(classification_report(y_test_sift, y_pred_dt))
 
-sio.dump(dt_rgb, "Models/dt_rgb.skops")
-sio.dump(dt_hsv, "Models/dt_hsv.skops")
-sio.dump(dt_sift, "Models/dt_sift.skops")
+sio.dump(dt_rgb, "./Models/dt_rgb.skops")
+sio.dump(dt_hsv, "./Models/dt_hsv.skops")
+sio.dump(dt_sift, "./Models/dt_sift.skops")
 
 # # %%
 # '''
@@ -252,9 +252,9 @@ sio.dump(dt_sift, "Models/dt_sift.skops")
 # print("Random Forest F1 Score:", f1_score(y_test_sift, y_pred_rf, average='weighted'))
 # ConfusionMatrixDisplay(confusion_matrix(y_test_sift, y_pred_rf),display_labels=rf_sift.classes_).plot()
 # print(classification_report(y_test_sift, y_pred_rf))
-# sio.dump(rf_rgb, "Models/rf_rgb.skops")
-# sio.dump(rf_hsv, "Models/rf_hsv.skops")
-# sio.dump(rf_sift, "Models/rf_sift.skops")
+# sio.dump(rf_rgb, "./Models/rf_rgb.skops")
+# sio.dump(rf_hsv, "./Models/rf_hsv.skops")
+# sio.dump(rf_sift, "./Models/rf_sift.skops")
 # # %%
 # '''
 # ## Gradient Boosting Classifier
@@ -332,6 +332,6 @@ sio.dump(dt_sift, "Models/dt_sift.skops")
 # ConfusionMatrixDisplay(confusion_matrix=confusion_matrix(y_test_sift, y_pred_gb),display_labels=gb_sift.classes_).plot()
 # print(classification_report(y_test_sift, y_pred_gb))
 
-# sio.dump(gb_rgb, "Models/gb_rgb.skops")
-# sio.dump(gb_hsv, "Models/gb_hsv.skops")
-# sio.dump(gb_sift, "Models/gb_sift.skops")
+# sio.dump(gb_rgb, "./Models/gb_rgb.skops")
+# sio.dump(gb_hsv, "./Models/gb_hsv.skops")
+# sio.dump(gb_sift, "./Models/gb_sift.skops")
