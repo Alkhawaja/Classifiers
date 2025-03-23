@@ -17,7 +17,7 @@ jobs:
     steps:
     - name: Push to Hugging Face Space
       env:
-        HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        HF_TOKEN: ${{ secrets.HF }}
       run: |
        pip install -U "huggingface_hub[cli]"
        huggingface-cli login --token ${{ secrets.HF_TOKEN }} --add-to-git-credential
