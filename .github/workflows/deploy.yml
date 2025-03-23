@@ -19,6 +19,7 @@ jobs:
       env:
         HF_TOKEN: ${{ secrets.HF }}
       run: |
+       git init
        git pull 
        pip install -U "huggingface_hub[cli]"
        huggingface-cli login --token $HF_TOKEN --add-to-git-credential
