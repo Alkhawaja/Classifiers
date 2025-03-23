@@ -1,0 +1,31 @@
+name: Deploy to HuggingFace Spaces
+
+on:
+  workflow_run:
+    workflows:
+      - "Python application" 
+    types:
+      - completed
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Push to Hugging Face Space
+      env:
+        HF_TOKEN: ${{ secrets.HF_TOKEN }}
+      run: |
+
+       git pull origin update
+       git switch update
+       pip install -U "huggingface_hub[cli]"
+       huggingface-cli login --token ${{secrets.HF_TOKEN}} --add-to-git-credential
+
+       huggingface-cli upload Fareskh12/Classifiers ./Models ./ --repo-type=space --commit-message="Sync App files"
+
+deploy: hf-login push-hub
