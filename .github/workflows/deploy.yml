@@ -20,9 +20,6 @@ jobs:
       env:
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
       run: |
-
-       git pull origin update
-       git switch update
        pip install -U "huggingface_hub[cli]"
        huggingface-cli login --token ${{secrets.HF_TOKEN}} --add-to-git-credential
 
