@@ -16,6 +16,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix,recall_score,f1_score,precision_score, ConfusionMatrixDisplay
 from xgboost import XGBClassifier
+import skops.io as sio
 
 
 # %%
@@ -171,6 +172,10 @@ print("Decision Tree F1 Score:", f1_score(y_test_sift, y_pred_dt, average='weigh
 ConfusionMatrixDisplay(confusion_matrix(y_test_sift, y_pred_dt),display_labels=dt_sift.classes_).plot()
 print(classification_report(y_test_sift, y_pred_dt))
 
+sio.dump(dt_rgb, "dt_rgb.skops")
+sio.dump(dt_hsv, "dt_hsv.skops")
+sio.dump(dt_sift, "dt_sift.skops")
+
 # %%
 '''
 ## Random Forest Classifier
@@ -247,7 +252,9 @@ print("Random Forest Recall:", recall_score(y_test_sift, y_pred_rf, average='wei
 print("Random Forest F1 Score:", f1_score(y_test_sift, y_pred_rf, average='weighted'))
 ConfusionMatrixDisplay(confusion_matrix(y_test_sift, y_pred_rf),display_labels=rf_sift.classes_).plot()
 print(classification_report(y_test_sift, y_pred_rf))
-
+sio.dump(rf_rgb, "rf_rgb.skops")
+sio.dump(rf_hsv, "rf_hsv.skops")
+sio.dump(rf_sift, "rf_sift.skops")
 # %%
 '''
 ## Gradient Boosting Classifier
@@ -324,3 +331,7 @@ print("Gradient Boosting Recall:", recall_score(y_test_sift, y_pred_gb, average=
 print("Gradient Boosting F1 Score:", f1_score(y_test_sift, y_pred_gb, average='weighted'))
 ConfusionMatrixDisplay(confusion_matrix=confusion_matrix(y_test_sift, y_pred_gb),display_labels=gb_sift.classes_).plot()
 print(classification_report(y_test_sift, y_pred_gb))
+
+sio.dump(gb_rgb, "gb_rgb.skops")
+sio.dump(gb_hsv, "gb_hsv.skops")
+sio.dump(gb_sift, "gb_sift.skops")
