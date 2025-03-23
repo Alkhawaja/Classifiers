@@ -63,7 +63,7 @@ def extract_bovw_features(directory,num_clusters=50):
     # Step 2: Apply KMeans clustering to form visual words
     kmeans = KMeans(n_clusters=num_clusters, random_state=42, n_init=10)
     kmeans.fit(descriptors_stack)
-
+    sio.dump(kmeans, "kmeans.skops")
     # Step 3: Create histograms for each image
     bovw_features = []
 
@@ -71,7 +71,7 @@ def extract_bovw_features(directory,num_clusters=50):
         words = kmeans.predict(descriptors)
         hist, _ = np.histogram(words, bins=num_clusters, range=(0, num_clusters))
         bovw_features.append(hist)
-
+        
         
     return np.array(bovw_features), np.array(labels)
     
