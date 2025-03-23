@@ -22,5 +22,5 @@ jobs:
       run: |
        pip install -U "huggingface_hub[cli]"
        huggingface-cli login --token $HF_TOKEN --add-to-git-credential
-    - run: make upload
+       huggingface-cli upload Fareskh12/Classifiers ./Model /Models  --repo-type=space --commit-message="Sync App files"
 
