@@ -1,26 +1,19 @@
-name: Deploy to HuggingFace Spaces
-
+name: Continuous Deployment
 on:
   workflow_run:
-    workflows:
-      - "Python application" 
+    workflows: ["Continuous Integration"]
     types:
       - completed
+
   workflow_dispatch:
-permissions:
-  contents: read
 
 jobs:
-   build:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Push to Hugging Face Space
-      env:
-        HF_TOKEN: ${{ secrets.HF }}
-      run: |
-       git pull
-       pip install -U "huggingface_hub[cli]"
-       huggingface-cli login --token $HF_TOKEN --add-to-git-credential
-       huggingface-cli upload Fareskh12/Classifiers ./ .  --repo-type=space --commit-message="Sync App files"
+      - uses: actions/checkout@v3
 
+      - name: Deployment To Hugging Face
+        env:
+          HF: ${{ secrets.HF }}
+        run: make deploy HF=$HF
