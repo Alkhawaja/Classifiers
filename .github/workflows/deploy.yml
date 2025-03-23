@@ -21,6 +21,6 @@ jobs:
       run: |
        pip install -U "huggingface_hub[cli]"
        huggingface-cli login --token $HF_TOKEN --add-to-git-credential
-       huggingface-cli upload Fareskh12/Classifiers   --repo-type=space --commit-message="Sync App files"
+       huggingface-cli upload Fareskh12/Classifiers ./ /  --repo-type=space --commit-message="Sync App files"
 
        hf-login push-hub
