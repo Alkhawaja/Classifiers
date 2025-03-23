@@ -17,7 +17,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix,recall_score,f1_score,precision_score, ConfusionMatrixDisplay
 from xgboost import XGBClassifier
 import skops.io as sio
-
+os.makedirs('./Models', exist_ok=True)
 
 # %%
 '''
