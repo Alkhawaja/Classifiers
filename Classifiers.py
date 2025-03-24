@@ -1,8 +1,8 @@
 # %%
-import os
-import numpy as np
+# import os
+# import numpy as np
 # from PIL import Image
-import cv2
+# import cv2
 from sklearn.cluster import KMeans
 # from sklearn.pipeline import Pipeline
 # from sklearn.decomposition import PCA
@@ -13,73 +13,74 @@ from sklearn.cluster import KMeans
 # from sklearn.metrics import accuracy_score, classification_report, confusion_matrix,recall_score,f1_score,precision_score, ConfusionMatrixDisplay
 # from xgboost import XGBClassifier
 import skops.io as sio
+kmeans = KMeans(n_clusters=num_clusters, random_state=42, n_init=10)
+ sio.dump(kmeans, "./Model/kmeanss.skops")
+# # %%
+# '''
+# ## Image preprocessing
+# '''
 
-# %%
-'''
-## Image preprocessing
-'''
-
-# %%
-# Define Image Transformations RGB
-def load_images_to_array(directory):
-    images,imagesRGB,imagesHSV, labels,labelsRGB =[], [], [],[],[]
-    for i,dir in enumerate(directory):
-        for file in os.listdir(dir):
-            img_path = os.path.join(dir, file)
-            img = Image.open(img_path)  
-            img = img.resize((128, 128))
-            images.append(np.array(img.convert('L')).flatten())
-            labels.append(i)
-            if img.mode == 'RGB':
-                imagesRGB.append(np.array(img).flatten())
-                imagesHSV.append(np.array(img.convert('HSV')).flatten())
-                labelsRGB.append(i)
+# # %%
+# # Define Image Transformations RGB
+# def load_images_to_array(directory):
+#     images,imagesRGB,imagesHSV, labels,labelsRGB =[], [], [],[],[]
+#     for i,dir in enumerate(directory):
+#         for file in os.listdir(dir):
+#             img_path = os.path.join(dir, file)
+#             img = Image.open(img_path)  
+#             img = img.resize((128, 128))
+#             images.append(np.array(img.convert('L')).flatten())
+#             labels.append(i)
+#             if img.mode == 'RGB':
+#                 imagesRGB.append(np.array(img).flatten())
+#                 imagesHSV.append(np.array(img.convert('HSV')).flatten())
+#                 labelsRGB.append(i)
                 
-    return np.array(images),np.array(imagesRGB),np.array(imagesHSV), np.array(labels),np.array(labelsRGB)
+#     return np.array(images),np.array(imagesRGB),np.array(imagesHSV), np.array(labels),np.array(labelsRGB)
 
-# Define SIFT Feature Extraction
-def extract_bovw_features(directory,num_clusters=50):
-    sift = cv2.SIFT_create()
-    images, labels = [], []
-    for i,dir in enumerate(directory):
-        for file in os.listdir(dir):
-            img_path = os.path.join(dir, file)
-            img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
-            if img is None:
-                continue
-            img = cv2.resize(img, (128, 128))
-            keypoints, descriptors = sift.detectAndCompute(img, None)
-            if descriptors is not None:
-                images.append(descriptors)
-                labels.append(i)
-        # Stack all descriptors
-    descriptors_stack = np.vstack(images)
+# # Define SIFT Feature Extraction
+# def extract_bovw_features(directory,num_clusters=50):
+#     sift = cv2.SIFT_create()
+#     images, labels = [], []
+#     for i,dir in enumerate(directory):
+#         for file in os.listdir(dir):
+#             img_path = os.path.join(dir, file)
+#             img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+#             if img is None:
+#                 continue
+#             img = cv2.resize(img, (128, 128))
+#             keypoints, descriptors = sift.detectAndCompute(img, None)
+#             if descriptors is not None:
+#                 images.append(descriptors)
+#                 labels.append(i)
+#         # Stack all descriptors
+#     descriptors_stack = np.vstack(images)
 
-    # Step 2: Apply KMeans clustering to form visual words
-    kmeans = KMeans(n_clusters=num_clusters, random_state=42, n_init=10)
-    kmeans.fit(descriptors_stack)
-    sio.dump(kmeans, "./Model/kmeanss.skops")
-    # Step 3: Create histograms for each image
-    bovw_features = []
+#     # Step 2: Apply KMeans clustering to form visual words
+#     kmeans = KMeans(n_clusters=num_clusters, random_state=42, n_init=10)
+#     kmeans.fit(descriptors_stack)
+#     sio.dump(kmeans, "./Model/kmeanss.skops")
+#     # Step 3: Create histograms for each image
+#     bovw_features = []
 
-    for descriptors in images:
-        words = kmeans.predict(descriptors)
-        hist, _ = np.histogram(words, bins=num_clusters, range=(0, num_clusters))
-        bovw_features.append(hist)
+#     for descriptors in images:
+#         words = kmeans.predict(descriptors)
+#         hist, _ = np.histogram(words, bins=num_clusters, range=(0, num_clusters))
+#         bovw_features.append(hist)
         
         
-    return np.array(bovw_features), np.array(labels)
+#     return np.array(bovw_features), np.array(labels)
     
-# Load Dataset
-data_dir_train = ["Training/museum-indoor","Training/museum-outdoor" ] 
-data_dir_test = ["Museum_Validation/museum-indoor","Museum_Validation/museum-outdoor" ] 
+# # Load Dataset
+# data_dir_train = ["Training/museum-indoor","Training/museum-outdoor" ] 
+# data_dir_test = ["Museum_Validation/museum-indoor","Museum_Validation/museum-outdoor" ] 
 
-# X_train,X_train_rgb,X_train_hsv,y_train,y_train_rgb = load_images_to_array(data_dir_train)
-# X_test,X_test_rgb,X_test_hsv,y_test,y_test_rgb = load_images_to_array(data_dir_test)
+# # X_train,X_train_rgb,X_train_hsv,y_train,y_train_rgb = load_images_to_array(data_dir_train)
+# # X_test,X_test_rgb,X_test_hsv,y_test,y_test_rgb = load_images_to_array(data_dir_test)
 
 
-X_train_sift, y_train_sift = extract_bovw_features(data_dir_train)
-# X_test_sift, y_test_sift = extract_bovw_features(data_dir_test)
+# X_train_sift, y_train_sift = extract_bovw_features(data_dir_train)
+# # X_test_sift, y_test_sift = extract_bovw_features(data_dir_test)
 
 # # %%
 # '''
