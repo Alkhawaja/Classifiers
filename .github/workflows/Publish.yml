@@ -43,4 +43,4 @@ jobs:
        git config --global user.email ${{secrets.email}}
        git add --all
        git commit -am "Update with new results"
-       git push --force origin HEAD:update
+       git push --force origin HEAD:main
