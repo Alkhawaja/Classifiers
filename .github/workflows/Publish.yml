@@ -36,3 +36,9 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Run your script
       run: python Classifiers.py
+    - name: Install dependencies
+      run: |
+       git config --global user.name ${{secrets.username}}
+       git config --global user.email ${{secrets.email}}
+       git commit -am "Update with new results"
+       git push --force origin HEAD:update
