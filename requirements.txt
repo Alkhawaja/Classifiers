@@ -1,3 +1,2 @@
 skops
-opencv-python
 scikit-learn
