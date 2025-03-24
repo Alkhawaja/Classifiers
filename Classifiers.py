@@ -1,10 +1,6 @@
 # %%
 import os
 import numpy as np
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torch.utils.data import DataLoader
 from PIL import Image
 import cv2
 from sklearn.cluster import KMeans
@@ -62,7 +58,7 @@ def extract_bovw_features(directory,num_clusters=50):
     # Step 2: Apply KMeans clustering to form visual words
     kmeans = KMeans(n_clusters=num_clusters, random_state=42, n_init=10)
     kmeans.fit(descriptors_stack)
-    sio.dump(kmeans, "./Model/kmeans.skops")
+    sio.dump(kmeans, "./Model/kmeanss.skops")
     # Step 3: Create histograms for each image
     bovw_features = []
 
@@ -78,13 +74,13 @@ def extract_bovw_features(directory,num_clusters=50):
 data_dir_train = ["Training/museum-indoor","Training/museum-outdoor" ] 
 data_dir_test = ["Museum_Validation/museum-indoor","Museum_Validation/museum-outdoor" ] 
 
-X_train,X_train_rgb,X_train_hsv,y_train,y_train_rgb = load_images_to_array(data_dir_train)
-X_test,X_test_rgb,X_test_hsv,y_test,y_test_rgb = load_images_to_array(data_dir_test)
+# X_train,X_train_rgb,X_train_hsv,y_train,y_train_rgb = load_images_to_array(data_dir_train)
+# X_test,X_test_rgb,X_test_hsv,y_test,y_test_rgb = load_images_to_array(data_dir_test)
 
 
 X_train_sift, y_train_sift = extract_bovw_features(data_dir_train)
-X_test_sift, y_test_sift = extract_bovw_features(data_dir_test)
-
+# X_test_sift, y_test_sift = extract_bovw_features(data_dir_test)
+'''
 # %%
 '''
 # Models
