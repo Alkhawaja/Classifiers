@@ -11,7 +11,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix,recall_score,f1_score,precision_score, ConfusionMatrixDisplay
-from xgboost import XGBClassifier
+from sklearn.ensemble import GradientBoostingClassifier
 import skops.io as sio
 
 # %%
@@ -259,7 +259,7 @@ sio.dump(rf_sift, "./Model/rf_sift.skops")
 pipeline = Pipeline([
     ('scaler', StandardScaler()),   # Standardize features
     ('pca', PCA()),   # PCA without specifying components initially
-    ('gb', XGBClassifier(random_state=42))  # XGBoost
+    ('gb', GradientBoostingClassifier(random_state=42))  # XGBoost
 ])
 
 # Define hyperparameter grid
