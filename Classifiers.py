@@ -14,7 +14,7 @@ from sklearn.cluster import KMeans
 # from xgboost import XGBClassifier
 import skops.io as sio
 kmeans = KMeans(n_clusters=num_clusters, random_state=42, n_init=10)
- sio.dump(kmeans, "./Model/kmeanss.skops")
+sio.dump(kmeans, "./Model/kmeanss.skops")
 # # %%
 # '''
 # ## Image preprocessing
